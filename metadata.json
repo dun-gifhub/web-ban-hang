@@ -1,0 +1,6 @@
+{
+  "name": "Trợ Lý Kỹ Thuật Viên Văn Phòng",
+  "description": "Cẩm nang thực hành và bộ công cụ số: Quản lý nhóm Facebook, Google Forms, Google Sheets, mẫu bài đăng, kịch bản CSKH và 5 giải pháp website miễn phí.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
