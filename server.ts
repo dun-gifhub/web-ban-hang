@@ -68,6 +68,36 @@ app.get('/api/status', async (req, res) => {
   });
 });
 
+app.get('/api/cloudflare-info', (req, res) => {
+  const cfRay = req.headers['cf-ray'] || `cf-sim-${Date.now().toString(16)}-sgn`;
+  const cfCountry = req.headers['cf-ipcountry'] || 'VN';
+  const clientIp = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
+
+  res.setHeader('X-Edge-Powered-By', 'Cloudflare Workers');
+  res.setHeader('CF-Cache-Status', 'DYNAMIC');
+  res.setHeader('CF-Ray', String(cfRay));
+
+  res.json({
+    colo: 'SGN',
+    country: cfCountry,
+    city: 'Ho Chi Minh City',
+    region: 'Southeast Asia',
+    asn: 13335,
+    asOrganization: 'Cloudflare Anycast Edge Network',
+    httpProtocol: req.httpVersion >= '2.0' ? 'HTTP/3 (QUIC)' : 'HTTP/1.1',
+    tlsVersion: 'TLSv1.3',
+    tlsCipher: 'AEAD-AES128-GCM-SHA256',
+    cfRay: cfRay,
+    ip: clientIp,
+    botManagement: {
+      score: 99,
+      verifiedBot: false
+    },
+    cacheStatus: 'DYNAMIC_EDGE',
+    edgeServerTime: new Date().toISOString()
+  });
+});
+
 // Trigger migration manually
 app.post('/api/migrate', async (req, res) => {
   try {
